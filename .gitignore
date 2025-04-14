@@ -1,0 +1,23 @@
+# Node modules
+node_modules/
+
+# Build and distribution
+dist/
+build/
+
+# Logs
+*.log
+
+# Environment variables
+.env
+
+# OS specific files (e.g., macOS)
+.DS_Store
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-project
+
+# npm-debug
+npm-debug.log
