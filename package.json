@@ -1,0 +1,9 @@
+{
+  "name": "errorsnap",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "description": "Error tracking library with breadcrumbs for JavaScript",
+  "author": "Your Name",
+  "license": "MIT"
+}
