@@ -4,6 +4,17 @@
   "main": "index.js",
   "type": "module",
   "description": "Error tracking library with breadcrumbs for JavaScript",
-  "author": "Your Name",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/singhshubham98/errorsnap.git"
+  },
+  "keywords": [
+    "react",
+    "bugs",
+    "bug-tracker",
+    "errorsnap",
+    "error-tracker"
+  ],
+  "author": "Shubham Singh",
   "license": "MIT"
 }
