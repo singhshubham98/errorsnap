@@ -1,7 +1,7 @@
 import { addBreadcrumb } from '../breadcrumbs.js';
 
-export function trackConsole() {
-  ['log', 'warn', 'error', 'info'].forEach((method) => {
+export function trackConsole(consoleTypes) {
+  consoleTypes.forEach((method) => {
     const original = console[method];
 
     console[method] = function (...args) {

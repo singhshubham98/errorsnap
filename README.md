@@ -34,6 +34,8 @@ import ErrorSnap from 'errorsnap';
 ErrorSnap.init({
   endpoint: 'https://your-api.com/error-report', // required
   maxBreadcrumbs: 50, // optional (default: 30)
+  env: 'DEVELOPMENT', // optional (default: PRODUCTION)
+  consoleTypes: ['log', 'error']  // optional (default: ['log', 'warn', 'error', 'info'])
 }, window);
 ```
 
@@ -109,6 +111,8 @@ Initialize ErrorSnap with configuration.
 |--------------------|----------|-------------|
 | `endpoint`         | `string` | **Required.** API endpoint to send error reports. |
 | `maxBreadcrumbs`   | `number` | Optional. Max number of breadcrumbs to store (default: 20). |
+| `env`              | `string` | Optional. environment variable if DEVELOPMENT, no sending error to server (default: PRODUCTION). |
+| `consoleTypes`     | `Array` | Optional. to send specific console type details to server ['log', 'warn', 'error', 'info']. |
 
 ### `setUser(userInfo)`
 Attach user information to error reports.
