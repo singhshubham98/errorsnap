@@ -8,6 +8,7 @@ A lightweight JavaScript error tracking library to capture and report runtime er
 - ✅ Breadcrumbs for user actions (clicks, navigation, console, fetch)
 - ✅ Manual error reporting
 - ✅ Custom user context
+- ✅ Local storage queue + background sending via `navigator.sendBeacon`
 - ✅ Simple API, framework-agnostic (vanilla JS)
 
 ## 🚀 Installation
@@ -81,7 +82,7 @@ These breadcrumbs are included with every error report to give context.
 Example payload sent to your API:
 
 ```json
-logs: [{
+{
   "type": "error",
   "timestamp": "2025-04-15T04:41:06.708Z",
   "context": {
@@ -103,7 +104,7 @@ logs: [{
     { "type": "navigation", "message": "Navigated to /dashboard" },
     { "type": "console", "message": "Console error: Something went wrong" }
   ]
-}]
+}
 ```
 
 ---
@@ -117,9 +118,9 @@ Initialize ErrorSnap with configuration.
 |--------------------|----------|-------------|
 | `endpoint`         | `string` | **Required.** API endpoint to send error reports. |
 | `maxBreadcrumbs`   | `number` | Optional. Max number of breadcrumbs to store (default: 20). |
-| `env`              | `string` | Optional. environment variable if DEVELOPMENT, no sending error to server (default: PRODUCTION). |
-| `consoleTypes`     | `array` | Optional. to send specific console type details to server ['log', 'warn', 'error', 'info']. |
-| `interval`     | `number` | Optional. specific interval to send to server (in sec). |
+| `env`              | `string` | Optional. if DEVELOPMENT, no sending error to server (default: PRODUCTION). |
+| `consoleTypes`     | `array`  | Optional. to send specific console type details to server ['log', 'warn', 'error', 'info']. |
+| `interval`         | `number` | Optional. Time in seconds to batch+send errors (default: 60) |
 
 ### `setUser(userInfo)`
 Attach user information to error reports.
