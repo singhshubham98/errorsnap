@@ -14,7 +14,7 @@ function init(options = {}, globalObject=window) {
   if (options.env) config.env = options.env;
 
   // ✅ Attach global error handlers
-  if(env !== 'DEVELOPMENT') {
+  if(options.env !== 'DEVELOPMENT') {
     globalObject.addEventListener("error", globalErrorHandler);
     globalObject.addEventListener("unhandledrejection", unhandledRejectionHandler);
   }
