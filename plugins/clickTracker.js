@@ -6,9 +6,17 @@ export function trackClicks() {
     if (!target) return;
 
     let description = target.tagName.toLowerCase();
-    if (target.id) description += `#${target.id}`;
+    
+    const testId = target.getAttribute('data-testid');
+    if (testId) {
+      description += `[data-testid="${testId}"]`;
+    }
+    if (target.id) {
+      description += `#${target.id}`;
+    }
+
     if (target.className && typeof target.className === 'string') {
-      description += `.${target.className.split(' ').join('.')}`;
+      description += `.${target.className.trim().split(/\s+/).join('.')}`;
     }
 
     addBreadcrumb({
