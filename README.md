@@ -31,12 +31,10 @@ import ErrorSnap from 'errorsnap';
 ### 1. Initialize ErrorSnap
 
 ```javascript
-import ErrorSnap from 'errorsnap';
-
 ErrorSnap.init({
   endpoint: 'https://your-api.com/error-report', // required
   maxBreadcrumbs: 50, // optional (default: 30)
-});
+}, window);
 ```
 
 ### 2. Set user info (optional)
