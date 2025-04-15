@@ -7,6 +7,7 @@ import { trackClicks } from './plugins/clickTracker.js';
 import { trackNavigation } from './plugins/navigationTracker.js';
 import { trackFetch } from './plugins/fetchTracker.js';
 import { trackConsole } from './plugins/consoleTracker.js';
+import { flushStoredErrors, startStorageQueueFlusher } from './plugins/storageQueue.js';
 
 function init(options = {}, globalObject=window) {
   if (options.endpoint) config.endpoint = options.endpoint;
@@ -14,17 +15,22 @@ function init(options = {}, globalObject=window) {
   if (options.env) config.env = options.env;
 
   addBreadcrumb({ type: 'init', message: 'BugSnap initialized' });
-  
-  trackClicks();
-  trackNavigation();
-  trackFetch();
-  trackConsole(options.consoleTypes || ['log', 'warn', 'error', 'info']);
 
   // ✅ Attach global error handlers
   if(options.env !== 'DEVELOPMENT') {
     globalObject.addEventListener("error", globalErrorHandler);
     globalObject.addEventListener("unhandledrejection", unhandledRejectionHandler);
+    globalObject.addEventListener('beforeunload', () => {
+      flushStoredErrors(); // flush unsent data on tab close
+    });
   }
+
+  // plugins
+  trackClicks();
+  trackNavigation();
+  trackFetch();
+  trackConsole(options.consoleTypes || ['log', 'warn', 'error', 'info']);
+  startStorageQueueFlusher(); // Start flusher here
 }
 
 function setUser(userInfo) {
