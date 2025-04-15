@@ -1,4 +1,4 @@
-import { addBreadcrumb } from "../breadcrumbs";
+import { addBreadcrumb } from "../breadcrumbs.js";
 
 export function trackClicks() {
   document.addEventListener('click', (event) => {
