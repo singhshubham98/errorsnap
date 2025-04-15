@@ -82,16 +82,20 @@ Example payload sent to your API:
 ```json
 {
   "type": "error",
-  "message": "Uncaught TypeError: Cannot read properties of undefined",
-  "source": "app.js",
-  "lineno": 42,
-  "colno": 13,
-  "stack": "TypeError: ...",
-  "user": {
-    "id": "12345",
-    "name": "John Doe",
-    "email": "john@example.com"
-  },
+  "context": {
+    "url": "http://localhost:3000/public/bui/user/dashboard",
+    "timestamp": "2025-04-15T04:41:06.708Z",
+    "userInfo": {
+      "id": "12345",
+      "name": "John Doe",
+      "email": "john@example.com"
+    },
+    "errorMessage": "setShowVide is not defined",
+    "simplifiedStackTrace": "",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
+    "browserInfo": "Google Chrome",
+    "operatingSystem": "Windows"
+  }
   "breadcrumbs": [
     { "type": "click", "message": "Clicked on #submit-button" },
     { "type": "navigation", "message": "Navigated to /dashboard" },

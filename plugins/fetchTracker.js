@@ -13,11 +13,9 @@ export function trackFetch() {
     addBreadcrumb({
       type: 'fetch',
       category: 'request',
-      message: `Request: [${method}] ${url}`,
       data: {
         url,
         method,
-        timestamp: new Date().toISOString(),
       },
     });
 
@@ -29,13 +27,11 @@ export function trackFetch() {
       addBreadcrumb({
         type: 'fetch',
         category: 'response',
-        message: `Response: [${method}] ${url} - Status: ${response.status} - Duration: ${duration}ms`,
         data: {
           url,
           method,
           status: response.status,
           duration: `${duration}ms`,
-          timestamp: new Date().toISOString(),
         },
       });
 
@@ -47,13 +43,11 @@ export function trackFetch() {
       addBreadcrumb({
         type: 'fetch',
         category: 'error',
-        message: `Fetch error: [${method}] ${url} - ${error.message} - Duration: ${duration}ms`,
         data: {
           url,
           method,
           error: error.message,
           duration: `${duration}ms`,
-          timestamp: new Date().toISOString(),
         },
       });
 
