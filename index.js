@@ -13,6 +13,7 @@ function init(options = {}, globalObject=window) {
   if (options.endpoint) config.endpoint = options.endpoint;
   if (options.maxBreadcrumbs) config.maxBreadcrumbs = options.maxBreadcrumbs;
   if (options.env) config.env = options.env;
+  if(options.interval) config.interval = options.interval;
 
   addBreadcrumb({ type: 'init', message: 'BugSnap initialized' });
 

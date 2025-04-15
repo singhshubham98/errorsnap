@@ -3,4 +3,5 @@ export const config = {
     maxBreadcrumbs: 30,
     env: 'DEVELOPMENT',
     user: null,
+    interval: 60
 };

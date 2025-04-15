@@ -35,7 +35,8 @@ ErrorSnap.init({
   endpoint: 'https://your-api.com/error-report', // required
   maxBreadcrumbs: 50, // optional (default: 30)
   env: 'DEVELOPMENT', // optional (default: PRODUCTION)
-  consoleTypes: ['log', 'error']  // optional (default: ['log', 'warn', 'error', 'info'])
+  consoleTypes: ['log', 'error'],  // optional (default: ['log', 'warn', 'error', 'info'])
+  interval: 60    // optional (default: 60sec)
 }, window);
 ```
 
@@ -80,8 +81,9 @@ These breadcrumbs are included with every error report to give context.
 Example payload sent to your API:
 
 ```json
-{
+logs: [{
   "type": "error",
+  "timestamp": "2025-04-15T04:41:06.708Z",
   "context": {
     "url": "http://localhost:3000/public/bui/user/dashboard",
     "timestamp": "2025-04-15T04:41:06.708Z",
@@ -101,7 +103,7 @@ Example payload sent to your API:
     { "type": "navigation", "message": "Navigated to /dashboard" },
     { "type": "console", "message": "Console error: Something went wrong" }
   ]
-}
+}]
 ```
 
 ---
@@ -116,7 +118,8 @@ Initialize ErrorSnap with configuration.
 | `endpoint`         | `string` | **Required.** API endpoint to send error reports. |
 | `maxBreadcrumbs`   | `number` | Optional. Max number of breadcrumbs to store (default: 20). |
 | `env`              | `string` | Optional. environment variable if DEVELOPMENT, no sending error to server (default: PRODUCTION). |
-| `consoleTypes`     | `Array` | Optional. to send specific console type details to server ['log', 'warn', 'error', 'info']. |
+| `consoleTypes`     | `array` | Optional. to send specific console type details to server ['log', 'warn', 'error', 'info']. |
+| `interval`     | `number` | Optional. specific interval to send to server (in sec). |
 
 ### `setUser(userInfo)`
 Attach user information to error reports.

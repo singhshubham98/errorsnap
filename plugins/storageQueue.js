@@ -2,7 +2,7 @@ import { config } from "../config.js";
 
 const STORAGE_KEY = 'errorsnap_logs';
 const LAST_SENT_KEY = 'errorsnap_last_sent';
-const SEND_INTERVAL = 60 * 1000; // 60 seconds
+const SEND_INTERVAL = config.interval * 1000; // 60 seconds
 
 export function saveErrorToStorage(error) {
     const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
