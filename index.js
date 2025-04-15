@@ -13,18 +13,18 @@ function init(options = {}, globalObject=window) {
   if (options.maxBreadcrumbs) config.maxBreadcrumbs = options.maxBreadcrumbs;
   if (options.env) config.env = options.env;
 
-  // ✅ Attach global error handlers
-  if(options.env !== 'DEVELOPMENT') {
-    globalObject.addEventListener("error", globalErrorHandler);
-    globalObject.addEventListener("unhandledrejection", unhandledRejectionHandler);
-  }
+  addBreadcrumb({ type: 'init', message: 'BugSnap initialized' });
   
   trackClicks();
   trackNavigation();
   trackFetch();
   trackConsole(options.consoleTypes || ['log', 'warn', 'error', 'info']);
 
-  addBreadcrumb({ type: 'init', message: 'BugSnap initialized' });
+  // ✅ Attach global error handlers
+  if(options.env !== 'DEVELOPMENT') {
+    globalObject.addEventListener("error", globalErrorHandler);
+    globalObject.addEventListener("unhandledrejection", unhandledRejectionHandler);
+  }
 }
 
 function setUser(userInfo) {
