@@ -1,3 +1,5 @@
+import { addBreadcrumb } from "../breadcrumbs";
+
 export function trackClicks() {
   document.addEventListener('click', (event) => {
     const target = event.target;
