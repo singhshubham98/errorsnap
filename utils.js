@@ -20,16 +20,20 @@ export function sanitize(obj) {
     }
 }
   
-export function getContext(user, errorEvent, type) {
+export function getContext(errorEvent, type) {
   return {
     url: window.location.href,
-    timestamp: new Date().toISOString(),
-    userInfo: user,
     errorMessage: errorMessage(errorEvent, type),
-    simplifiedStackTrace: stackTrace(errorEvent, type),
-    userAgent: navigator.userAgent,
+    simplifiedStackTrace: stackTrace(errorEvent, type)
+  };
+}
+
+export function getBrowserAndSystemInfo(user){
+  return {
     browserInfo: getBrowserInfo(),
     operatingSystem: getOperatingSystem(),
+    userAgent: navigator.userAgent,
+    userInfo: user,
   };
 }
 

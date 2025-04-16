@@ -1,5 +1,5 @@
 import { config } from "../config.js";
-import { generateUUID } from "../utils.js";
+import { generateUUID, getBrowserAndSystemInfo } from "../utils.js";
 
 const STORAGE_KEY = 'errorsnap_logs';
 const LAST_SENT_KEY = 'errorsnap_last_sent';
@@ -10,14 +10,24 @@ function hashError(error) {
 }
 
 export function saveErrorToStorage(error) {
-  const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+  const { logs } = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{"logs":[],"browserAndSystemInfo":{}}');
   const errorHash = hashError(error);
   // Check if same hash already exists in storage
-  const isDuplicate = stored.some(log => hashError(log) === errorHash);
-  if (isDuplicate) return; // skip duplicate
-
-  stored.push({ ...error, id: generateUUID(), timestamp: new Date().toISOString() });
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(stored));
+  const isDuplicate = logs.some(log => hashError(log) === errorHash);
+  if (isDuplicate) {
+    logs.map(error => {
+      if (hashError(error) === errorHash) {
+        error.count = (error.count || 1) + 1; // Increment count
+        return error;
+      }
+      return error
+    });
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({logs, browserAndSystemInfo: getBrowserAndSystemInfo(config.user) }));
+  } else {
+    // If not, add new error
+    logs.push({ ...error, count: 1, id: generateUUID(), timestamp: new Date().toISOString() });
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({logs, browserAndSystemInfo: getBrowserAndSystemInfo(config.user) }));
+  }
 }
   
 export async function flushStoredErrors() {
@@ -26,11 +36,11 @@ export async function flushStoredErrors() {
 
   if (now - lastSent < SEND_INTERVAL) return;
 
-  const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-  if (!stored.length) return;
+  const {logs, browserAndSystemInfo} = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+  if (!logs.length) return;
 
   try {
-    const payload = JSON.stringify({ logs: stored });
+    const payload = JSON.stringify({ logs, browserAndSystemInfo});
 
     // Try sendBeacon if available
     const success = navigator.sendBeacon(config.endpoint, payload);
