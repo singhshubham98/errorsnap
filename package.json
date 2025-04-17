@@ -1,6 +1,6 @@
 {
   "name": "errorsnap",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "main": "index.js",
   "type": "module",
   "description": "Error tracking library with breadcrumbs for JavaScript",

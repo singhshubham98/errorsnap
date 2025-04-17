@@ -12,24 +12,30 @@ function hashError(error) {
 export function saveErrorToStorage(error) {
   const { logs } = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{"logs":[],"browserAndSystemInfo":{}}');
   const errorHash = hashError(error);
-  // Check if same hash already exists in storage
-  const isDuplicate = logs.some(log => hashError(log) === errorHash);
-  if (isDuplicate) {
-    logs.map(error => {
-      if (hashError(error) === errorHash) {
-        error.count = (error.count || 1) + 1; // Increment count
-        return error;
-      }
-      return error
-    });
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({logs, browserAndSystemInfo: getBrowserAndSystemInfo(config.user) }));
+  // Check if the same hash already exists in storage
+  const existingLog = logs.find(log => hashError(log) === errorHash);
+
+  if (existingLog) {
+    // If exists, increment its count safely
+    existingLog.count = (existingLog.count || 1) + 1;
+    existingLog.timestamp = new Date().toISOString(); // Optionally update timestamp
   } else {
-    // If not, add new error
-    logs.push({ ...error, count: 1, id: generateUUID(), timestamp: new Date().toISOString() });
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({logs, browserAndSystemInfo: getBrowserAndSystemInfo(config.user) }));
+    // If not, add a new log entry
+    logs.push({
+      ...error,
+      count: 1,
+      id: generateUUID(),
+      timestamp: new Date().toISOString()
+    });
   }
+
+  // Save updated logs and system info to storage
+  localStorage.setItem(STORAGE_KEY, JSON.stringify({
+    logs,
+    browserAndSystemInfo: getBrowserAndSystemInfo(config.user)
+  }));
 }
-  
+
 export async function flushStoredErrors() {
   const lastSent = parseInt(localStorage.getItem(LAST_SENT_KEY), 10) || 0;
   const now = Date.now();
