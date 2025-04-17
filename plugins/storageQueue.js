@@ -42,8 +42,9 @@ export async function flushStoredErrors() {
 
   if (now - lastSent < SEND_INTERVAL) return;
 
-  const {logs, browserAndSystemInfo} = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-  if (!logs.length) return;
+  const {logs, browserAndSystemInfo} = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{"logs":[],"browserAndSystemInfo":{}}');
+
+  if (!logs?.length) return;
 
   try {
     const payload = JSON.stringify({ logs, browserAndSystemInfo});
