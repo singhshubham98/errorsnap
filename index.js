@@ -1,7 +1,6 @@
 import { config } from './config.js';
 import { addBreadcrumb } from './breadcrumbs.js';
-import { manualNotify } from './handlers.js';
-import { globalErrorHandler, unhandledRejectionHandler } from './handlers.js';
+import { globalErrorHandler, unhandledRejectionHandler, manualNotify } from './handlers.js';
 
 import { trackClicks } from './plugins/clickTracker.js';
 import { trackNavigation } from './plugins/navigationTracker.js';

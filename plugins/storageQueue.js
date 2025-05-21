@@ -10,15 +10,18 @@ function hashError(error) {
 }
 
 export function saveErrorToStorage(error) {
-  const { logs } = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{"logs":[],"browserAndSystemInfo":{}}');
+  const storageData = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{"logs":[],"browserAndSystemInfo":{}}');
+  const logs = [...storageData.logs]; // clone array to avoid in-place mutation
   const errorHash = hashError(error);
   // Check if the same hash already exists in storage
-  const existingLog = logs.find(log => hashError(log) === errorHash);
+  const existingLogIndex = logs.findIndex(log => hashError(log) === errorHash);
 
-  if (existingLog) {
+  if (existingLogIndex !== -1) {
     // If exists, increment its count safely
+    const existingLog = { ...logs[existingLogIndex] }; // shallow clone log
     existingLog.count = (existingLog.count || 1) + 1;
-    existingLog.timestamp = new Date().toISOString(); // Optionally update timestamp
+    existingLog.timestamp = new Date().toISOString();
+    logs[existingLogIndex] = existingLog; // replace with updated log
   } else {
     // If not, add a new log entry
     logs.push({

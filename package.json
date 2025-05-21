@@ -1,9 +1,9 @@
 {
   "name": "errorsnap",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "main": "index.js",
   "type": "module",
-  "description": "Error tracking library with breadcrumbs for JavaScript",
+  "description": "A lightweight JavaScript error tracking library to capture and report runtime errors, unhandled promise rejections, and useful contextual breadcrumbs like user actions, navigation events, console logs, and network requests.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/singhshubham98/errorsnap.git"
@@ -11,6 +11,9 @@
   "keywords": [
     "react",
     "bugs",
+    "bug tracker",
+    "error snap",
+    "error tracker",
     "bug-tracker",
     "errorsnap",
     "error-tracker"
